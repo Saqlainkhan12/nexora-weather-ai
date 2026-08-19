@@ -1,2 +1,14 @@
+[project]
+name = "nexora-weather-ai"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "flask",
+    "flask-cors",
+    "python-dotenv",
+    "requests",
+    "google-generativeai"
+]
+
 [tool.vercel]
 entrypoint = "backend.app:app"
