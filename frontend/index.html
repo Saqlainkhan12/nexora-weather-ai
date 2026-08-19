@@ -1,0 +1,449 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>NEXORA Weather AI</title>
+
+<link
+rel="stylesheet"
+href="/style.css">
+
+</head>
+
+<body class="clear">
+
+<div class="weather-bg"></div>
+
+<div class="app">
+
+<header class="topbar">
+
+<div class="brand">
+
+<div class="logo">
+☼
+</div>
+
+<div>
+
+<div class="brand-name">
+NEXORA
+</div>
+
+<div class="brand-sub">
+WEATHER AI
+</div>
+
+</div>
+
+</div>
+
+
+<div class="search">
+
+<input
+id="cityInput"
+placeholder="Search city..."
+autocomplete="off">
+
+<button onclick="searchWeather()">
+⌕
+</button>
+
+<button
+class="location"
+onclick="useLocation()">
+⌖
+</button>
+
+</div>
+
+
+<div class="status">
+
+<span></span>
+
+LIVE WEATHER
+
+</div>
+
+</header>
+
+
+<main>
+
+
+<section class="hero">
+
+<div>
+
+<div class="eyebrow">
+REAL-TIME WEATHER INTELLIGENCE
+</div>
+
+<h1>
+
+Weather,
+<br>
+
+<span>reimagined.</span>
+
+</h1>
+
+<p>
+Live conditions, forecasts and AI-powered weather
+guidance in one modern workspace.
+</p>
+
+</div>
+
+<div class="hero-time">
+
+<div id="clock">
+--:--
+</div>
+
+<div id="date">
+Loading...
+</div>
+
+</div>
+
+</section>
+
+
+<section class="weather-grid">
+
+
+<div class="current-card glass">
+
+<div class="location-line">
+
+<div>
+
+<div class="city"
+id="city">
+Search a city
+</div>
+
+<div class="country"
+id="country">
+Pakistan
+</div>
+
+</div>
+
+<div class="weather-icon"
+id="weatherIcon">
+☀️
+</div>
+
+</div>
+
+
+<div class="temperature">
+
+<span id="temperature">
+--
+</span>
+
+<sup>°C</sup>
+
+</div>
+
+
+<div class="condition"
+id="condition">
+Waiting for weather...
+</div>
+
+
+<div class="feels">
+Feels like
+<strong id="feels">
+--°C
+</strong>
+</div>
+
+
+<div class="quick-stats">
+
+<div>
+
+<span>💧</span>
+
+<small>Humidity</small>
+
+<strong id="humidity">
+--%
+</strong>
+
+</div>
+
+
+<div>
+
+<span>💨</span>
+
+<small>Wind</small>
+
+<strong id="wind">
+-- km/h
+</strong>
+
+</div>
+
+
+<div>
+
+<span>👁</span>
+
+<small>Visibility</small>
+
+<strong id="visibility">
+-- km
+</strong>
+
+</div>
+
+
+<div>
+
+<span>⌁</span>
+
+<small>Pressure</small>
+
+<strong id="pressure">
+-- hPa
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="forecast-card glass">
+
+<div class="card-head">
+
+<div>
+
+<span class="card-kicker">
+NEXT HOURS
+</span>
+
+<h2>
+Hourly forecast
+</h2>
+
+</div>
+
+<span class="live-pill">
+● LIVE
+</span>
+
+</div>
+
+<div
+class="hourly"
+id="hourly">
+</div>
+
+</div>
+
+
+</section>
+
+
+<section class="lower-grid">
+
+
+<div class="daily-card glass">
+
+<div class="card-head">
+
+<div>
+
+<span class="card-kicker">
+UPCOMING
+</span>
+
+<h2>
+5-day forecast
+</h2>
+
+</div>
+
+</div>
+
+<div
+class="daily"
+id="daily">
+</div>
+
+</div>
+
+
+<aside class="ai-card glass">
+
+<div class="ai-header">
+
+<div class="ai-avatar">
+✦
+</div>
+
+<div>
+
+<strong>
+NEXORA Weather AI
+</strong>
+
+<small>
+Your intelligent weather teammate
+</small>
+
+</div>
+
+<span class="ai-live">
+●
+</span>
+
+</div>
+
+
+<div
+class="ai-messages"
+id="aiMessages">
+
+<div class="ai-message">
+
+<div class="ai-mini">
+✦
+</div>
+
+<div>
+
+Hi! Ask me anything about
+the current weather.
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="ai-suggestions">
+
+<button onclick="askAI('Should I go outside today?')">
+Should I go outside?
+</button>
+
+<button onclick="askAI('Should I carry an umbrella?')">
+☂ Umbrella?
+</button>
+
+<button onclick="askAI('Is this good weather for travel?')">
+Travel conditions?
+</button>
+
+</div>
+
+
+<div class="ai-input">
+
+<input
+id="aiInput"
+placeholder="Ask Weather AI...">
+
+<button onclick="sendAI()">
+➤
+</button>
+
+</div>
+
+</aside>
+
+
+</section>
+
+
+<section class="details glass">
+
+<div>
+
+<span>🌅 Sunrise</span>
+
+<strong id="sunrise">
+--
+</strong>
+
+</div>
+
+<div>
+
+<span>🌇 Sunset</span>
+
+<strong id="sunset">
+--
+</strong>
+
+</div>
+
+<div>
+
+<span>🧭 Wind direction</span>
+
+<strong id="windDirection">
+--
+</strong>
+
+</div>
+
+<div>
+
+<span>☁ Conditions</span>
+
+<strong id="description">
+--
+</strong>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+NEXORA Weather AI
+<span>•</span>
+Real-time weather intelligence
+
+</footer>
+
+</div>
+
+
+<div
+class="toast"
+id="toast">
+</div>
+
+
+<script src="/app.js"></script>
+
+</body>
+
+</html>
