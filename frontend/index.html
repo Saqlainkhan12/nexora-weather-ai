@@ -1,262 +1,282 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>NEXORA Weather AI</title>
 
-<link
-rel="stylesheet"
-href="/style.css">
+<meta name="description"
+content="NEXORA Weather AI — live weather intelligence and AI-powered guidance.">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/style.css">
 </head>
 
-<body class="clear">
+<body>
 
-<div class="weather-bg"></div>
+<div class="bg-orb orb-one"></div>
+<div class="bg-orb orb-two"></div>
 
 <div class="app">
 
 <header class="topbar">
 
-<div class="brand">
+    <div class="brand">
+        <div class="brand-icon">✦</div>
 
-<div class="logo">
-☼
-</div>
-
-<div>
-
-<div class="brand-name">
-NEXORA
-</div>
-
-<div class="brand-sub">
-WEATHER AI
-</div>
-
-</div>
-
-</div>
+        <div>
+            <div class="brand-name">NEXORA</div>
+            <div class="brand-sub">WEATHER INTELLIGENCE</div>
+        </div>
+    </div>
 
 
-<div class="search">
+    <div class="search">
 
-<input
-id="cityInput"
-placeholder="Search city..."
-autocomplete="off">
+        <span class="search-symbol">⌕</span>
 
-<button onclick="searchWeather()">
-⌕
-</button>
+        <input
+            id="cityInput"
+            placeholder="Search city, country..."
+            autocomplete="off"
+        >
 
-<button
-class="location"
-onclick="useLocation()">
-⌖
-</button>
+        <button onclick="searchWeather()">
+            Search
+        </button>
 
-</div>
+    </div>
 
 
-<div class="status">
+    <div class="actions">
 
-<span></span>
+        <button
+            class="action"
+            onclick="useLocation()"
+            title="Use current location">
+            ◎
+        </button>
 
-LIVE WEATHER
+        <button
+            class="action"
+            onclick="refreshWeather()"
+            title="Refresh">
+            ↻
+        </button>
 
-</div>
+        <button
+            class="unit"
+            id="unitButton"
+            onclick="toggleUnit()">
+            °C
+        </button>
+
+        <button
+            class="action"
+            id="themeButton"
+            onclick="toggleTheme()">
+            ☾
+        </button>
+
+    </div>
 
 </header>
+
+
+<div class="livebar">
+
+    <div class="live">
+        <i></i>
+        LIVE WEATHER
+    </div>
+
+    <div class="live-location">
+        <span id="statusCity">Loading...</span>
+        <b>•</b>
+        <span id="lastUpdated">Connecting...</span>
+    </div>
+
+</div>
 
 
 <main>
 
 
-<section class="hero">
+<section class="intro">
 
-<div>
+    <div class="intro-copy">
 
-<div class="eyebrow">
-REAL-TIME WEATHER INTELLIGENCE
-</div>
+        <div class="eyebrow">
+            <span></span>
+            REAL-TIME WEATHER INTELLIGENCE
+        </div>
 
-<h1>
+        <h1>
+            Weather that
+            <em>understands</em>
+            your day.
+        </h1>
 
-Weather,
-<br>
+        <p>
+            Live conditions, detailed forecasts and an
+            intelligent weather assistant — designed to
+            turn weather data into decisions.
+        </p>
 
-<span>reimagined.</span>
+        <div class="intro-buttons">
 
-</h1>
+            <button
+                class="primary"
+                onclick="askAI('Give me a useful summary of today weather.')">
+                ✦ Ask NEXORA AI
+            </button>
 
-<p>
-Live conditions, forecasts and AI-powered weather
-guidance in one modern workspace.
-</p>
+            <button
+                class="secondary"
+                onclick="useLocation()">
+                ◎ Use my location
+            </button>
 
-</div>
+        </div>
 
-<div class="hero-time">
+    </div>
 
-<div id="clock">
---:--
-</div>
 
-<div id="date">
-Loading...
-</div>
+    <div class="time-card">
 
-</div>
+        <span>LOCAL TIME</span>
+
+        <strong id="clock">--:--</strong>
+
+        <small id="date">Loading...</small>
+
+    </div>
 
 </section>
 
 
-<section class="weather-grid">
+<section class="main-grid">
 
 
-<div class="current-card glass">
+<div class="current card">
 
-<div class="location-line">
+    <div class="card-head">
 
-<div>
+        <div>
 
-<div class="city"
-id="city">
-Search a city
-</div>
+            <span class="label">
+                CURRENT CONDITIONS
+            </span>
 
-<div class="country"
-id="country">
-Pakistan
-</div>
+            <h2 id="city">Lahore</h2>
 
-</div>
+            <small id="country">Pakistan</small>
 
-<div class="weather-icon"
-id="weatherIcon">
-☀️
-</div>
+        </div>
 
-</div>
+        <div class="weather-symbol" id="weatherIcon">
+            ☀️
+        </div>
+
+    </div>
 
 
-<div class="temperature">
+    <div class="current-main">
 
-<span id="temperature">
---
-</span>
+        <div class="temp">
 
-<sup>°C</sup>
+            <span id="temperature">--</span>
 
-</div>
+            <sup id="tempUnit">°C</sup>
 
-
-<div class="condition"
-id="condition">
-Waiting for weather...
-</div>
+        </div>
 
 
-<div class="feels">
-Feels like
-<strong id="feels">
---°C
-</strong>
-</div>
+        <div class="condition">
+
+            <strong id="condition">
+                Loading weather
+            </strong>
+
+            <span>
+                Feels like
+                <b id="feels">--°</b>
+            </span>
+
+        </div>
+
+    </div>
 
 
-<div class="quick-stats">
-
-<div>
-
-<span>💧</span>
-
-<small>Humidity</small>
-
-<strong id="humidity">
---%
-</strong>
-
-</div>
+    <div class="summary" id="weatherSummary">
+        Getting live weather intelligence...
+    </div>
 
 
-<div>
+    <div class="metrics">
 
-<span>💨</span>
+        <div class="metric">
+            <span class="metric-icon">💧</span>
+            <div>
+                <small>Humidity</small>
+                <strong id="humidity">--%</strong>
+            </div>
+        </div>
 
-<small>Wind</small>
+        <div class="metric">
+            <span class="metric-icon">↗</span>
+            <div>
+                <small>Wind</small>
+                <strong id="wind">-- km/h</strong>
+            </div>
+        </div>
 
-<strong id="wind">
--- km/h
-</strong>
+        <div class="metric">
+            <span class="metric-icon">◉</span>
+            <div>
+                <small>Visibility</small>
+                <strong id="visibility">-- km</strong>
+            </div>
+        </div>
 
-</div>
+        <div class="metric">
+            <span class="metric-icon">⌁</span>
+            <div>
+                <small>Pressure</small>
+                <strong id="pressure">-- hPa</strong>
+            </div>
+        </div>
 
-
-<div>
-
-<span>👁</span>
-
-<small>Visibility</small>
-
-<strong id="visibility">
--- km
-</strong>
-
-</div>
-
-
-<div>
-
-<span>⌁</span>
-
-<small>Pressure</small>
-
-<strong id="pressure">
--- hPa
-</strong>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
 
-<div class="forecast-card glass">
+<div class="hourly card">
 
-<div class="card-head">
+    <div class="section-head">
 
-<div>
+        <div>
+            <span class="label">NEXT HOURS</span>
+            <h3>Hourly forecast</h3>
+        </div>
 
-<span class="card-kicker">
-NEXT HOURS
-</span>
+        <span class="live-pill">
+            <i></i> LIVE
+        </span>
 
-<h2>
-Hourly forecast
-</h2>
+    </div>
 
-</div>
 
-<span class="live-pill">
-● LIVE
-</span>
-
-</div>
-
-<div
-class="hourly"
-id="hourly">
-</div>
+    <div
+        class="hourly-list"
+        id="hourly">
+    </div>
 
 </div>
 
@@ -264,172 +284,268 @@ id="hourly">
 </section>
 
 
-<section class="lower-grid">
+<section class="second-grid">
 
 
-<div class="daily-card glass">
+<div class="ai card">
 
-<div class="card-head">
+    <div class="ai-top">
 
-<div>
+        <div class="ai-title">
 
-<span class="card-kicker">
-UPCOMING
-</span>
+            <div class="ai-logo">
+                ✦
+            </div>
 
-<h2>
-5-day forecast
-</h2>
+            <div>
+                <strong>NEXORA AI</strong>
+                <small>Weather decision assistant</small>
+            </div>
 
-</div>
+        </div>
 
-</div>
+        <span class="online">
+            ONLINE
+        </span>
 
-<div
-class="daily"
-id="daily">
-</div>
-
-</div>
+    </div>
 
 
-<aside class="ai-card glass">
+    <div
+        class="messages"
+        id="aiMessages">
 
-<div class="ai-header">
+        <div class="message bot">
 
-<div class="ai-avatar">
-✦
-</div>
+            <div class="avatar">✦</div>
 
-<div>
+            <p>
+                Hi. I'm your weather intelligence layer.
+                Ask me about rain, travel, outdoor plans,
+                temperature or what to wear.
+            </p>
 
-<strong>
-NEXORA Weather AI
-</strong>
+        </div>
 
-<small>
-Your intelligent weather teammate
-</small>
-
-</div>
-
-<span class="ai-live">
-●
-</span>
-
-</div>
+    </div>
 
 
-<div
-class="ai-messages"
-id="aiMessages">
+    <div class="quick">
 
-<div class="ai-message">
+        <button onclick="askAI('Should I go outside today?')">
+            Go outside?
+        </button>
 
-<div class="ai-mini">
-✦
-</div>
+        <button onclick="askAI('Should I carry an umbrella today?')">
+            Umbrella?
+        </button>
 
-<div>
+        <button onclick="askAI('Is today good for travel?')">
+            Travel?
+        </button>
 
-Hi! Ask me anything about
-the current weather.
+        <button onclick="askAI('What should I wear today?')">
+            What to wear?
+        </button>
 
-</div>
-
-</div>
-
-</div>
+    </div>
 
 
-<div class="ai-suggestions">
+    <div class="ai-input">
 
-<button onclick="askAI('Should I go outside today?')">
-Should I go outside?
-</button>
+        <input
+            id="aiInput"
+            placeholder="Ask NEXORA anything..."
+        >
 
-<button onclick="askAI('Should I carry an umbrella?')">
-☂ Umbrella?
-</button>
+        <button onclick="sendAI()">
+            ↑
+        </button>
 
-<button onclick="askAI('Is this good weather for travel?')">
-Travel conditions?
-</button>
+    </div>
 
 </div>
 
 
-<div class="ai-input">
+<div class="forecast card">
 
-<input
-id="aiInput"
-placeholder="Ask Weather AI...">
+    <div class="section-head">
 
-<button onclick="sendAI()">
-➤
-</button>
+        <div>
+            <span class="label">FORECAST</span>
+            <h3>5-day outlook</h3>
+        </div>
+
+        <span class="muted">
+            Extended view
+        </span>
+
+    </div>
+
+
+    <div
+        class="daily-list"
+        id="daily">
+    </div>
 
 </div>
-
-</aside>
 
 
 </section>
 
 
-<section class="details glass">
+<section class="stats">
 
-<div>
+    <div class="stat">
+        <span>☀</span>
+        <div>
+            <small>Sunrise</small>
+            <strong id="sunrise">--:--</strong>
+        </div>
+    </div>
 
-<span>🌅 Sunrise</span>
+    <div class="stat">
+        <span>◐</span>
+        <div>
+            <small>Sunset</small>
+            <strong id="sunset">--:--</strong>
+        </div>
+    </div>
 
-<strong id="sunrise">
---
-</strong>
+    <div class="stat">
+        <span>↗</span>
+        <div>
+            <small>Wind direction</small>
+            <strong id="windDirection">--°</strong>
+        </div>
+    </div>
 
-</div>
+    <div class="stat">
+        <span>☔</span>
+        <div>
+            <small>Rain probability</small>
+            <strong id="rainChance">--%</strong>
+        </div>
+    </div>
 
-<div>
-
-<span>🌇 Sunset</span>
-
-<strong id="sunset">
---
-</strong>
-
-</div>
-
-<div>
-
-<span>🧭 Wind direction</span>
-
-<strong id="windDirection">
---
-</strong>
-
-</div>
-
-<div>
-
-<span>☁ Conditions</span>
-
-<strong id="description">
---
-</strong>
-
-</div>
+    <div class="stat">
+        <span>☁</span>
+        <div>
+            <small>Conditions</small>
+            <strong id="description">--</strong>
+        </div>
+    </div>
 
 </section>
 
+
+<section class="bottom-grid">
+
+
+<div class="map card">
+
+    <div class="section-head">
+
+        <div>
+            <span class="label">LOCATION</span>
+            <h3>Weather map</h3>
+        </div>
+
+        <span
+            id="mapLocation"
+            class="muted">
+            --
+        </span>
+
+    </div>
+
+
+    <div class="map-box">
+
+        <iframe
+            id="weatherMap"
+            title="Weather location map"
+            loading="lazy"
+            src="about:blank">
+        </iframe>
+
+        <div class="map-badge">
+            ◎ Live location
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="insight card">
+
+    <div class="section-head">
+
+        <div>
+            <span class="label">NEXORA INSIGHT</span>
+            <h3>What matters today</h3>
+        </div>
+
+        <span class="spark">✦</span>
+
+    </div>
+
+
+    <div class="insight-body">
+
+        <div class="insight-icon">
+            ✦
+        </div>
+
+        <div>
+
+            <strong id="insightTitle">
+                Preparing your forecast
+            </strong>
+
+            <p id="insightText">
+                NEXORA will translate live weather
+                conditions into a simple recommendation.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="insight-actions">
+
+        <button
+            onclick="askAI('Give me a detailed weather analysis for today.')">
+            Detailed analysis
+        </button>
+
+        <button
+            onclick="askAI('What should I wear today?')">
+            Clothing advice
+        </button>
+
+    </div>
+
+</div>
+
+
+</section>
 
 </main>
 
 
 <footer>
 
-NEXORA Weather AI
-<span>•</span>
-Real-time weather intelligence
+    <div>
+        <strong>NEXORA</strong>
+        <span>Weather Intelligence</span>
+    </div>
+
+    <span>
+        Live data · AI guidance · Forecast intelligence
+    </span>
 
 </footer>
 
@@ -437,13 +553,12 @@ Real-time weather intelligence
 
 
 <div
-class="toast"
-id="toast">
+    class="toast"
+    id="toast">
 </div>
 
 
 <script src="/app.js"></script>
 
 </body>
-
 </html>
