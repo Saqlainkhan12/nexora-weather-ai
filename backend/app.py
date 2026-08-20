@@ -1,4 +1,4 @@
-import os
+﻿import os
 import requests
 
 from flask import Flask, request, jsonify, send_from_directory
@@ -54,10 +54,9 @@ def javascript():
 @app.route("/api/weather")
 def weather():
 
-    city = request.args.get(
-        "city",
-        ""
-    ).strip()
+        city = request.args.get("city", "").strip()
+    lat = request.args.get("lat", "").strip()
+    lon = request.args.get("lon", "").strip()
 
     if not city:
 
@@ -82,11 +81,18 @@ def weather():
             "https://api.openweathermap.org/data/2.5/forecast"
         )
 
-        params = {
-            "q": city,
+                params = {
             "appid": OPENWEATHER_API_KEY,
             "units": "metric"
         }
+
+        if lat and lon:
+            params["lat"] = lat
+            params["lon"] = lon
+        elif city:
+            params["q"] = city
+        else:
+            return jsonify({"error": "City or coordinates required."}), 400
 
         current_response = requests.get(
             current_url,
@@ -423,3 +429,4 @@ if __name__ == "__main__":
         port=5000,
         debug=True
     )
+
